@@ -18,6 +18,7 @@ object LogUtil {
     }
 
     fun logI(msg: Any?) {
+        Log.i(TAG, "logI: $msg, isEnableLog: $isEnableLog")
         if (!isEnableLog) {
             return
         }
