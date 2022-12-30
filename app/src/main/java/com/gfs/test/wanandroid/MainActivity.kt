@@ -1,5 +1,6 @@
 package com.gfs.test.wanandroid
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,12 +9,20 @@ import com.gfs.test.base.ui.BaseActivity
 import com.gfs.test.wanandroid.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
     override fun initView(savedInstanceState: Bundle?, view: View?) {
         binding.toolBar.apply {
             title = "WanAndroid"
             setSupportActionBar(binding.toolBar)
         }
-        //todo 导入 LiveEventBus，实现全局换肤功能
+
+        binding.btnChange.setOnClickListener {
+            changeAppThemeColor(Color.RED)
+        }
+    }
+
+    override fun changeAppThemeColor(themeColor: Int) {
+//        binding.toolBar.setBackgroundColor(themeColor)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

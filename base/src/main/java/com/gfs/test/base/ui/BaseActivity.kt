@@ -1,12 +1,17 @@
 package com.gfs.test.base.ui
 
+import android.database.Observable
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.dylanc.viewbinding.base.ActivityBinding
 import com.dylanc.viewbinding.base.ActivityBindingDelegate
 import com.gfs.test.base.`interface`.IView
+import com.gfs.test.base.constant.EventConstant
 import com.gfs.test.base.util.ToastUtil
+import com.jeremyliao.liveeventbus.LiveEventBus
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), IView, ActivityBinding<VB> by ActivityBindingDelegate() {
 
@@ -15,6 +20,16 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), IView, Acti
         setContentViewWithBinding()
         initView(savedInstanceState)
         initData()
+
+        LiveEventBus.get<Int>(EventConstant.CHANGE_APP_THEME_COLOR_EVENT)
+            .observe(this) {
+                changeAppThemeColor(it)
+            }
+    }
+
+    protected open fun changeAppThemeColor(themeColor: Int) {
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(themeColor))
+
     }
 
     override fun showToast(msg: Any?) {
