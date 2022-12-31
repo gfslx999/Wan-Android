@@ -1,15 +1,16 @@
 package com.gfs.test.base.ui
 
-import android.database.Observable
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.dylanc.viewbinding.base.ActivityBinding
 import com.dylanc.viewbinding.base.ActivityBindingDelegate
 import com.gfs.test.base.`interface`.IView
 import com.gfs.test.base.constant.EventConstant
+import com.gfs.test.base.model.ThemeConfigModel
+import com.gfs.test.base.util.StatusBarUtil
+import com.gfs.test.base.util.ThemeUtil
 import com.gfs.test.base.util.ToastUtil
 import com.jeremyliao.liveeventbus.LiveEventBus
 
@@ -18,18 +19,27 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity(), IView, Acti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentViewWithBinding()
+
         initView(savedInstanceState)
         initData()
 
-        LiveEventBus.get<Int>(EventConstant.CHANGE_APP_THEME_COLOR_EVENT)
-            .observe(this) {
-                changeAppThemeColor(it)
-            }
+//        changeAppThemeColor(ThemeUtil.getAppThemeConfig(this), false)
+//        // 监听更改主题色事件
+//        LiveEventBus.get<ThemeConfigModel>(EventConstant.CHANGE_APP_THEME_COLOR_EVENT)
+//            .observe(this) {
+//                changeAppThemeColor(it)
+//            }
     }
 
-    protected open fun changeAppThemeColor(themeColor: Int) {
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(themeColor))
-
+    protected open fun changeAppThemeColor(themeModel: ThemeConfigModel, isSave: Boolean = true) {
+        supportActionBar?.let {
+            it.setBackgroundDrawable(ColorDrawable(themeModel.themeColor))
+        }
+        StatusBarUtil.setStatusBarColor(this, themeModel.themeColor, themeModel.superStyleIsDark)
+        if (!isSave) {
+            return
+        }
+        ThemeUtil.saveAppThemeConfig(themeModel)
     }
 
     override fun showToast(msg: Any?) {

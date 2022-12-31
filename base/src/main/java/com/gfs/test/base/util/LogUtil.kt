@@ -18,25 +18,35 @@ object LogUtil {
     }
 
     fun logI(msg: Any?) {
-        Log.i(TAG, "logI: $msg, isEnableLog: $isEnableLog")
         if (!isEnableLog) {
             return
         }
-        Log.i(TAG, "logI: $msg")
+        logSplitLine()
+        Log.i("$TAG-logI", "$msg")
+        logSplitLine()
     }
 
     fun logE(msg: Any?) {
         if (!isEnableLog) {
             return
         }
+
+        logSplitLine()
         Log.e(TAG, "logE: $msg")
+        logSplitLine()
     }
 
     fun logD(msg: Any?) {
         if (!isEnableLog) {
             return
         }
+        logSplitLine()
         Log.d(TAG, "logD: $msg")
+        logSplitLine()
+    }
+
+    private fun logSplitLine() {
+        Log.i(TAG,"==========================================")
     }
 
 }

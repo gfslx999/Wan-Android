@@ -40,4 +40,6 @@ dependencies {
 
     api 'com.github.DylanCaiCoding.ViewBindingKTX:viewbinding-base:2.1.0'
     api 'io.github.jeremyliao:live-event-bus-x:1.8.0'
+    // MMKV
+    implementation 'com.tencent:mmkv:1.0.23'
 }

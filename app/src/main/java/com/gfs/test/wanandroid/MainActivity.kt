@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.gfs.test.base.constant.EventConstant
 import com.gfs.test.base.ui.BaseActivity
+import com.gfs.test.base.util.ActivityUtil
 import com.gfs.test.wanandroid.databinding.ActivityMainBinding
+import com.jeremyliao.liveeventbus.LiveEventBus
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -17,12 +20,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         binding.btnChange.setOnClickListener {
-            changeAppThemeColor(Color.RED)
+            ActivityUtil.startActivity<SelectAppThemeActivity>(this)
         }
-    }
-
-    override fun changeAppThemeColor(themeColor: Int) {
-//        binding.toolBar.setBackgroundColor(themeColor)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
