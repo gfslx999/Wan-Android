@@ -1,15 +1,13 @@
 package com.gfs.test.wanandroid
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.gfs.test.base.constant.EventConstant
 import com.gfs.test.base.ui.BaseActivity
 import com.gfs.test.base.util.ActivityUtil
 import com.gfs.test.wanandroid.databinding.ActivityMainBinding
-import com.jeremyliao.liveeventbus.LiveEventBus
+import com.gfs.test.wanandroid.mvvm.view.IndexArticleActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -20,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         binding.btnChange.setOnClickListener {
-            ActivityUtil.startActivity<SelectAppThemeActivity>(this)
+            ActivityUtil.startActivity<IndexArticleActivity>(this)
         }
     }
 
