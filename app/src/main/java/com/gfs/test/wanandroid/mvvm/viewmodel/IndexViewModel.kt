@@ -14,13 +14,6 @@ class IndexViewModel : ViewModel() {
 
     private val mRepository by lazy { IndexRepository() }
 
-    fun requestArticleList() {
-        launch {
-            val articleData = mRepository.requestIndexArticleList(0)
-
-        }
-    }
-
     fun requestIndexArticlePagingData() : Flow<PagingData<IndexArticleModel.Data>> {
         return mRepository.requestIndexArticlePagingData(0).cachedIn(viewModelScope)
     }

@@ -1,6 +1,6 @@
 package com.gfs.test.wanandroid.mvvm.model
 
-import com.gfs.helper.common.base.BasePagingData
+import com.gfs.helper.common.base.paging.BasePagingData
 import com.google.gson.annotations.SerializedName
 
 /**

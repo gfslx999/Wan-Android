@@ -1,4 +1,4 @@
-package com.gfs.helper.common.base
+package com.gfs.helper.common.base.paging
 
 abstract class BasePagingData {
     abstract fun soleId() : String
