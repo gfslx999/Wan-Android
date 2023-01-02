@@ -53,4 +53,5 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.9'
     //viewModel扩展库
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha02"
+    implementation (libs.paging)
 }

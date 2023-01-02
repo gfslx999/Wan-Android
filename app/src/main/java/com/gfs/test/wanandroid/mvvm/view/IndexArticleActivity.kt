@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.paging.filter
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gfs.helper.common.base.BasePagingAdapter
 import com.gfs.helper.common.expand.createViewModel
 import com.gfs.test.base.ui.BaseActivity
 import com.gfs.test.base.util.LogUtil
@@ -26,11 +29,27 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
             adapter = mArticleAdapter
         }
 
+        mArticleAdapter.bindChildItemClick(R.id.tv_title)
+        mArticleAdapter.setOnItemClickListener { _, position ->
+            LogUtil.logI("position: $position")
+            mArticleAdapter.peek(position)?.let {
+                showToast("item 点击事件：${it.title}")
+            }
+        }
+        mArticleAdapter.setOnChildItemClickListener { childViewId, position ->
+            if (childViewId == R.id.tv_title) {
+                showToast("childView 点击事件：${mArticleAdapter.peek(position)?.title}")
+            }
+        }
+    }
+
+    override fun initData() {
         lifecycleScope.launchWhenCreated {
             mViewModel.requestIndexArticlePagingData().collect {
                 mArticleAdapter.submitData(it)
             }
         }
+
         mArticleAdapter.addLoadStateListener {
             when (it.refresh) {
                 is LoadState.Loading -> {
@@ -49,8 +68,5 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
                 }
             }
         }
-    }
-
-    override fun initData() {
     }
 }

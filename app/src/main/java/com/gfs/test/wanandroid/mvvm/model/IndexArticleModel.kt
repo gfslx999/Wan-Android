@@ -1,5 +1,6 @@
 package com.gfs.test.wanandroid.mvvm.model
 
+import com.gfs.helper.common.base.BasePagingData
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -51,5 +52,7 @@ data class IndexArticleModel(
         val userId: Int?,
         val visible: Int?,
         val zan: Int?
-    )
+    ) : BasePagingData() {
+        override fun soleId(): String  = id.toString()
+    }
 }
