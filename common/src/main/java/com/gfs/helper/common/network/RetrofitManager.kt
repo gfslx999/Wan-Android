@@ -19,7 +19,7 @@ object RetrofitManager {
             .callTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
-            .addNetworkInterceptor(HttpLoggingInterceptor())
+            .addNetworkInterceptor(LoggingInterceptor())
             .build()
     }
 
