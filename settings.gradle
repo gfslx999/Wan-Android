@@ -26,6 +26,8 @@ dependencyResolutionManagement {
             library("paging", "androidx.paging:paging-runtime:3.1.1")
             // LiveData
             library("livedata-ktx", "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
+            // SwipeRefreshLayout
+            library("swiperefreshlayout", "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
         }
     }
 }

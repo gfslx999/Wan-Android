@@ -21,6 +21,18 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
     private val mArticleAdapter = IndexArticleAdapter()
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
+        initRv()
+        initSwipeRefreshLayout()
+        initOnClick()
+    }
+
+    private fun initSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            mArticleAdapter.refresh()
+        }
+    }
+
+    private fun initRv() {
         binding.rvArticles.apply {
             layoutManager = LinearLayoutManager(this@IndexArticleActivity)
             adapter = mArticleAdapter.withLoadStateFooter(DefaultPagingFooterAdapter {
@@ -28,8 +40,6 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
             })
             setDefaultOverScrollMode()
         }
-
-        initOnClick()
     }
 
     private fun initOnClick() {
@@ -51,17 +61,27 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
         mArticleAdapter.addLoadStateListener {
             when (it.refresh) {
                 is LoadState.Loading -> {
-                    binding.progressCircular.visibility = View.VISIBLE
+                    binding.progressCircular.visibility = if (binding.swipeRefreshLayout.isRefreshing) {
+                        View.GONE
+                    } else {
+                        View.VISIBLE
+                    }
                     binding.rvArticles.visibility = View.GONE
                 }
                 is LoadState.NotLoading -> {
                     binding.progressCircular.visibility = View.GONE
                     binding.rvArticles.visibility = View.VISIBLE
+                    if (binding.swipeRefreshLayout.isRefreshing) {
+                        binding.swipeRefreshLayout.isRefreshing = false
+                    }
                 }
                 is LoadState.Error -> {
                     val error = it.refresh as LoadState.Error
                     binding.progressCircular.visibility = View.GONE
                     showToast("请求失败：" + error.error.message)
+                    if (binding.swipeRefreshLayout.isRefreshing) {
+                        binding.swipeRefreshLayout.isRefreshing = false
+                    }
                 }
             }
         }
