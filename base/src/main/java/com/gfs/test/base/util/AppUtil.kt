@@ -11,4 +11,8 @@ object AppUtil {
         return Thread.currentThread() == Looper.getMainLooper().thread
     }
 
+    fun logCheckIsInMainThread() {
+        LogUtil.logI("checkIsInMainThread: ${checkIsInMainThread()}")
+    }
+
 }

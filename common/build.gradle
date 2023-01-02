@@ -28,6 +28,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -49,6 +52,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     // 协程
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0-RC2"
+
     // gson
     api 'com.google.code.gson:gson:2.8.9'
     //viewModel扩展库

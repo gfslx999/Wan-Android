@@ -5,10 +5,11 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gfs.helper.common.base.OnItemChildViewClickListener
+import androidx.recyclerview.widget.RecyclerView
+import com.gfs.helper.common.base.paging.DefaultPagingFooterAdapter
 import com.gfs.helper.common.expand.createViewModel
+import com.gfs.helper.common.expand.setDefaultOverScrollMode
 import com.gfs.test.base.ui.BaseActivity
-import com.gfs.test.base.util.LogUtil
 import com.gfs.test.wanandroid.R
 import com.gfs.test.wanandroid.databinding.ActivityIndexArticleAdapterBinding
 import com.gfs.test.wanandroid.mvvm.view.adapter.IndexArticleAdapter
@@ -22,7 +23,10 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
         binding.rvArticles.apply {
             layoutManager = LinearLayoutManager(this@IndexArticleActivity)
-            adapter = mArticleAdapter
+            adapter = mArticleAdapter.withLoadStateFooter(DefaultPagingFooterAdapter {
+                mArticleAdapter.retry()
+            })
+            setDefaultOverScrollMode()
         }
 
         initOnClick()

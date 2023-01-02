@@ -148,18 +148,17 @@ abstract class BasePagingAdapter<T : BasePagingData , VH : RecyclerView.ViewHold
     fun addOnItemChildViewLongClickListener(childViewId: Int, onItemChildViewLongClickListener: OnItemChildViewLongClickListener<T>) {
         mChildViewLongClickArray.put(childViewId, onItemChildViewLongClickListener)
     }
+}
 
-    // 用于 paging 进行比较的默认实现类
-    internal class DefaultComparator<T : BasePagingData> : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
-            return oldItem.soleId() == newItem.soleId()
-        }
-
-        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
-            return oldItem == newItem
-        }
+// 用于 paging 进行比较的默认实现类
+internal class DefaultComparator<T : BasePagingData> : DiffUtil.ItemCallback<T>() {
+    override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+        return oldItem.soleId() == newItem.soleId()
     }
 
+    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+        return oldItem == newItem
+    }
 }
 
 typealias OnItemClickListener <T> = (view: View, position: Int, itemData: T?) -> Unit
