@@ -15,13 +15,6 @@ import com.gfs.test.wanandroid.mvvm.view.IndexArticleActivity
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-        val retrofitConfig = RetrofitConfig.Builder()
-            .addCommonHeader("MainActivity-test1", "123")
-            .addCommonHeader("MainActivity-test2", "456")
-            .loggingInterceptorLevel(LoggingInterceptorLevel.BODY)
-            .build()
-        RetrofitManager.setRetrofitConfig(retrofitConfig)
-
         binding.toolBar.apply {
             title = "WanAndroid"
             setSupportActionBar(binding.toolBar)

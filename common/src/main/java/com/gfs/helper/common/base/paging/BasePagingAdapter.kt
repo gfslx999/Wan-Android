@@ -121,6 +121,9 @@ abstract class BasePagingAdapter<T : BasePagingData , VH : RecyclerView.ViewHold
      */
     protected abstract fun onCreateViewHolder(context: Context, parent: ViewGroup, viewType: Int,) : VH
 
+    fun getItems() : List<T> {
+        return snapshot().items
+    }
     /**
      * 设置 itemView 点击事件
      */
