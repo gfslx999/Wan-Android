@@ -13,10 +13,14 @@ import com.gfs.helper.common.expand.createViewModel
 import com.gfs.helper.common.expand.setDefaultOverScrollMode
 import com.gfs.helper.common.network.RetrofitManager
 import com.gfs.test.base.ui.BaseActivity
+import com.gfs.test.base.util.LogUtil
 import com.gfs.test.wanandroid.R
 import com.gfs.test.wanandroid.databinding.ActivityIndexArticleAdapterBinding
 import com.gfs.test.wanandroid.mvvm.view.adapter.IndexArticleAdapter
 import com.gfs.test.wanandroid.mvvm.viewmodel.IndexViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() {
@@ -28,7 +32,6 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
         initRv()
         initSwipeRefreshLayout()
         initOnClick()
-
     }
 
     private fun initSwipeRefreshLayout() {

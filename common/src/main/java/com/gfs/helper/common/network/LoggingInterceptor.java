@@ -1,12 +1,16 @@
 package com.gfs.helper.common.network;
 
+import static okhttp3.internal.platform.Platform.INFO;
+
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.gfs.helper.common.enun.LoggingInterceptorLevel;
 import com.gfs.test.base.BuildConfig;
 import com.gfs.test.base.exception.NetworkUnAvailableException;
 import com.gfs.test.base.util.AppUtil;
-import com.gfs.test.base.util.LogUtil;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -14,7 +18,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiConsumer;
 
 import okhttp3.Connection;
 import okhttp3.Headers;
@@ -26,7 +29,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.internal.http.HttpHeaders;
-import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.internal.platform.Platform;
 import okio.Buffer;
 import okio.BufferedSource;
 
@@ -37,24 +40,28 @@ import okio.BufferedSource;
  * this class should not be considered stable and may change slightly between releases. If you need
  * a stable logging format, use your own interceptor.
  */
-public final class LoggingInterceptor implements Interceptor {
+final class LoggingInterceptor implements Interceptor {
     private static final Charset UTF8 = StandardCharsets.UTF_8;
 
     private final HashMap<String, String> mCommonHeadersMap;
-    private final HttpLoggingInterceptor.Logger logger;
-    private final HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
+    private final Logger logger;
+    @NonNull
+    private final LoggingInterceptorLevel level;
 
-    public LoggingInterceptor() {
-        this(HttpLoggingInterceptor.Logger.DEFAULT, null);
+    public LoggingInterceptor(HashMap<String, String> commonHeadersMap, LoggingInterceptorLevel level) {
+        this(Logger.DEFAULT, commonHeadersMap, level);
     }
 
-    public LoggingInterceptor(HashMap<String, String> commonHeadersMap) {
-        this(HttpLoggingInterceptor.Logger.DEFAULT, commonHeadersMap);
-    }
-
-    public LoggingInterceptor(HttpLoggingInterceptor.Logger logger, HashMap<String, String> commonHeadersMap) {
+    public LoggingInterceptor(Logger logger, HashMap<String, String> commonHeadersMap, LoggingInterceptorLevel level) {
         this.logger = logger;
         this.mCommonHeadersMap = commonHeadersMap;
+        this.level = level != null ? level : LoggingInterceptorLevel.NONE;
+    }
+
+    interface Logger {
+        void log(String message);
+
+        Logger DEFAULT = message -> Platform.get().log(INFO, message, null);
     }
 
     @NonNull
@@ -63,17 +70,15 @@ public final class LoggingInterceptor implements Interceptor {
         if (!AppUtil.INSTANCE.checkNetWorkIsConnect(true)) {
             throw new NetworkUnAvailableException();
         }
-        HttpLoggingInterceptor.Level level = this.level;
+        LoggingInterceptorLevel level = this.level;
 
         Request request = chain.request();
         Request.Builder requestBuilder = request.newBuilder();
-        LogUtil.INSTANCE.logI("mCommonHeadersMap: " + mCommonHeadersMap);
-        // 是否存在请求头
+        // 是否已配置请求头
         if (mCommonHeadersMap != null && !mCommonHeadersMap.isEmpty()) {
             for (String headerKey : mCommonHeadersMap.keySet()) {
                 String headerValue = mCommonHeadersMap.get(headerKey);
-                LogUtil.INSTANCE.logI("headerKey: " + headerKey + ", headerValue: " + headerValue);
-                if (headerValue != null) {
+                if (!TextUtils.isEmpty(headerKey) && headerValue != null) {
                     // 添加公共请求头
                     requestBuilder.addHeader(headerKey, headerValue);
                 }
@@ -81,13 +86,13 @@ public final class LoggingInterceptor implements Interceptor {
         }
         request = requestBuilder.build();
 
-        if (!BuildConfig.DEBUG && level != HttpLoggingInterceptor.Level.NONE) {
-            level = HttpLoggingInterceptor.Level.NONE;
+        if (!BuildConfig.DEBUG && level != LoggingInterceptorLevel.NONE) {
+            level = LoggingInterceptorLevel.NONE;
         }
 
-        boolean isNeedLog = level != HttpLoggingInterceptor.Level.NONE;
-        boolean logBody = level == HttpLoggingInterceptor.Level.BODY;
-        boolean logHeaders = logBody || level == HttpLoggingInterceptor.Level.HEADERS;
+        boolean isNeedLog = level != LoggingInterceptorLevel.NONE;
+        boolean logBody = level == LoggingInterceptorLevel.BODY;
+        boolean logHeaders = logBody || level == LoggingInterceptorLevel.HEADERS;
 
         RequestBody requestBody = request.body();
         boolean hasRequestBody = requestBody != null;

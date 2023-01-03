@@ -3,11 +3,9 @@ package com.gfs.helper.common.network
 import com.gfs.helper.common.entity.RetrofitConfig
 import com.gfs.test.base.constant.UrlConstant
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 /**
  * Retrofit 管理类
@@ -15,8 +13,8 @@ import java.util.concurrent.TimeUnit
 object RetrofitManager {
 
     private val mCacheRetrofitMap = mutableMapOf<String, Retrofit>()
-    private val mCommonHeadersMap: HashMap<String, String> by lazy { HashMap() }
     private var mOkHttpClient: OkHttpClient? = null
+    private var mRetrofitConfig: RetrofitConfig? = null
 
     /**
      * 调用 retrofit 创建对应的 API Service
@@ -46,29 +44,45 @@ object RetrofitManager {
     }
 
     /**
-     * 添加公共请求头
-     *
-     * 注意：调用此方法后必须调用 [takeEffectConfig] 方法，对应信息才会生效
+     * 设置 Retrofit 相关配置信息
      */
-    fun addCommonHeaders(key: String, value: String) : RetrofitManager {
-        if (key.isEmpty()) {
-            return this
-        }
-        mCommonHeadersMap[key] = value
-        return this
+    fun setRetrofitConfig(retrofitConfig: RetrofitConfig) {
+        mRetrofitConfig = retrofitConfig
+        resetCacheInfo()
     }
 
     /**
-     * 使配置生效
+     * 动态添加公共请求头
+     *
+     * 适用于动态添加可变请求头，例如：token、userId、userCode...
      */
-    fun takeEffectConfig() {
+    fun addCommonHeaders(key: String, value: String) {
+        if (key.isEmpty()) {
+            return
+        }
+
+        if (mRetrofitConfig == null) {
+            mRetrofitConfig = RetrofitConfig.Builder()
+                .addCommonHeader(key, value)
+                .build()
+        } else {
+            mRetrofitConfig!!.let {
+                if (it.commonHeadersMap == null) {
+                    it.commonHeadersMap = hashMapOf()
+                }
+                it.commonHeadersMap!![key] = value
+            }
+        }
+        resetCacheInfo()
+    }
+
+    private fun resetCacheInfo() {
         if (mOkHttpClient != null) {
             mOkHttpClient = null
         }
         if (mCacheRetrofitMap.isNotEmpty()) {
             mCacheRetrofitMap.clear()
         }
-        createOkHttpClient(mCommonHeadersMap)
     }
 
     private fun buildRetrofit(baseUrl: String) : Retrofit {
@@ -83,22 +97,19 @@ object RetrofitManager {
             .build()
     }
 
-    private var mRetrofitConfig: RetrofitConfig? = null
-
-    private fun createOkHttpClient(commonHeadersMap: HashMap<String, String>? = null) {
+    private fun createOkHttpClient() {
         if (mOkHttpClient != null) {
             return
         }
         if (mRetrofitConfig == null) {
             mRetrofitConfig = RetrofitConfig()
         }
-        //todo 添加公共请求头配置逻辑
         mRetrofitConfig!!.let { retrofitConfig ->
             mOkHttpClient =  OkHttpClient.Builder()
                 .callTimeout(retrofitConfig.callTimeOut, retrofitConfig.callTimeUnit)
                 .readTimeout(retrofitConfig.readTimeOut, retrofitConfig.readTimeUnit)
                 .connectTimeout(retrofitConfig.connectTimeOut, retrofitConfig.connectTimeUnit)
-                .addNetworkInterceptor(LoggingInterceptor(commonHeadersMap))
+                .addNetworkInterceptor(LoggingInterceptor(retrofitConfig.commonHeadersMap, retrofitConfig.loggingInterceptorLevel))
                 .build()
         }
     }
