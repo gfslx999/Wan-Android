@@ -1,16 +1,20 @@
 package com.gfs.helper.common.network;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.gfs.test.base.BuildConfig;
 import com.gfs.test.base.exception.NetworkUnAvailableException;
 import com.gfs.test.base.util.AppUtil;
+import com.gfs.test.base.util.LogUtil;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 
 import okhttp3.Connection;
 import okhttp3.Headers;
@@ -36,23 +40,25 @@ import okio.BufferedSource;
 public final class LoggingInterceptor implements Interceptor {
     private static final Charset UTF8 = StandardCharsets.UTF_8;
 
-    public LoggingInterceptor() {
-        this(HttpLoggingInterceptor.Logger.DEFAULT);
-    }
-
-    public LoggingInterceptor(HttpLoggingInterceptor.Logger logger) {
-        this.logger = logger;
-    }
-
+    private final HashMap<String, String> mCommonHeadersMap;
     private final HttpLoggingInterceptor.Logger logger;
+    private final HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
 
-    private volatile HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
-
-    public HttpLoggingInterceptor.Level getLevel() {
-        return level;
+    public LoggingInterceptor() {
+        this(HttpLoggingInterceptor.Logger.DEFAULT, null);
     }
 
-    @Override public Response intercept(Chain chain) throws IOException {
+    public LoggingInterceptor(HashMap<String, String> commonHeadersMap) {
+        this(HttpLoggingInterceptor.Logger.DEFAULT, commonHeadersMap);
+    }
+
+    public LoggingInterceptor(HttpLoggingInterceptor.Logger logger, HashMap<String, String> commonHeadersMap) {
+        this.logger = logger;
+        this.mCommonHeadersMap = commonHeadersMap;
+    }
+
+    @NonNull
+    @Override public Response intercept(@NonNull Chain chain) throws IOException {
         // 请求前校验网络状态
         if (!AppUtil.INSTANCE.checkNetWorkIsConnect(true)) {
             throw new NetworkUnAvailableException();
@@ -60,13 +66,24 @@ public final class LoggingInterceptor implements Interceptor {
         HttpLoggingInterceptor.Level level = this.level;
 
         Request request = chain.request();
-        //添加公共请求头
         Request.Builder requestBuilder = request.newBuilder();
+        LogUtil.INSTANCE.logI("mCommonHeadersMap: " + mCommonHeadersMap);
+        // 是否存在请求头
+        if (mCommonHeadersMap != null && !mCommonHeadersMap.isEmpty()) {
+            for (String headerKey : mCommonHeadersMap.keySet()) {
+                String headerValue = mCommonHeadersMap.get(headerKey);
+                LogUtil.INSTANCE.logI("headerKey: " + headerKey + ", headerValue: " + headerValue);
+                if (headerValue != null) {
+                    // 添加公共请求头
+                    requestBuilder.addHeader(headerKey, headerValue);
+                }
+            }
+        }
+        request = requestBuilder.build();
 
         if (!BuildConfig.DEBUG && level != HttpLoggingInterceptor.Level.NONE) {
             level = HttpLoggingInterceptor.Level.NONE;
         }
-        request = requestBuilder.build();
 
         boolean isNeedLog = level != HttpLoggingInterceptor.Level.NONE;
         boolean logBody = level == HttpLoggingInterceptor.Level.BODY;
