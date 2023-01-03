@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.gfs.helper.common.entity.RetrofitConfig
-import com.gfs.helper.common.enun.LoggingInterceptorLevel
+import com.gfs.helper.common.constant.LoggingInterceptorLevel
 import com.gfs.helper.common.network.RetrofitManager
 import com.gfs.test.base.ui.BaseActivity
 import com.gfs.test.base.util.ActivityUtil

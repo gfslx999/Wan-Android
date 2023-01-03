@@ -1,4 +1,4 @@
-package com.gfs.helper.common.enun;
+package com.gfs.helper.common.constant;
 
 public enum LoggingInterceptorLevel {
         /** No logs. */

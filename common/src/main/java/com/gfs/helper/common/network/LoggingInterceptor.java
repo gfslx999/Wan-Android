@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.gfs.helper.common.enun.LoggingInterceptorLevel;
+import com.gfs.helper.common.constant.LoggingInterceptorLevel;
 import com.gfs.test.base.BuildConfig;
 import com.gfs.test.base.exception.NetworkUnAvailableException;
 import com.gfs.test.base.util.AppUtil;
