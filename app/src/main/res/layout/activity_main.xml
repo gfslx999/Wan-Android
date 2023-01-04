@@ -44,6 +44,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.gfs.helper.common.ui.view.MySemiCircleProgressView
+            android:id="@+id/semicircle_progress"
+            app:layout_constraintLeft_toLeftOf="@+id/btn_change"
+            app:layout_constraintRight_toRightOf="@+id/btn_change"
+            app:layout_constraintTop_toBottomOf="@+id/btn_change"
+            android:background="@color/primary_color"
+            app:customBottomSemiProgressColor="#FF0000"
+            app:customTopSemiProgressColor="@color/primary_color"
+            android:layout_marginTop="20dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
+
+        <FrameLayout
+            android:id="@+id/frame_container"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="#FF0000"
+            android:layout_width="100dp"
+            android:layout_height="50dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

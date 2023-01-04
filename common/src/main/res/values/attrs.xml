@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <!-- 圆形进度条属性 -->
+    <declare-styleable name="MyCircleProgressView">
+        <!-- 顶层-进度条颜色 -->
+        <attr name="as_top_progress_color" format="color" />
+        <!-- 底层-进度条颜色 -->
+        <attr name="as_bottom_progress_color" format="color" />
+        <!-- 进度条的粗细 -->
+        <attr name="as_progress_thickness" format="dimension" />
+    </declare-styleable>
+
+    <!-- 半圆进度条属性 -->
+    <declare-styleable name="MySemiCircleProgressView">
+        <!-- 顶层-进度条颜色 -->
+        <attr name="customTopSemiProgressColor" format="color" />
+        <!-- 顶层-进度条颜色 2, 设置此属性 + customTopSemiProgressColor 可达到渐变效果 -->
+        <attr name="customTopSecondSemiProgressColor" format="color" />
+        <!-- 底层-进度条颜色 -->
+        <attr name="customBottomSemiProgressColor" format="color" />
+        <!-- 进度条的粗细 -->
+        <attr name="customSemiProgressThickness" format="dimension" />
+    </declare-styleable>
+
+    <!-- 圆形水波纹View -->
+    <declare-styleable name="MyCircleRippleView">
+        <!-- 颜色 -->
+        <attr name="rippleViewColor" format="color" />
+        <!-- 水波映射尺寸 -->
+        <attr name="rippleViewRippleSize" format="float" />
+        <!-- 水波纹绘制速率 -->
+        <attr name="rippleViewInvalidateRate" format="enum">
+            <!-- 绘制速率 - 慢 -->
+            <enum name="slowly" value="1" />
+            <!-- 绘制速率 - 中等(默认) -->
+            <enum name="medium" value="2" />
+            <!-- 绘制速率 - 快 -->
+            <enum name="fast" value="3" />
+        </attr>
+    </declare-styleable>
+
+</resources>
