@@ -18,6 +18,7 @@ class IndexViewModel : ViewModel() {
         return mRepository.requestIndexArticlePagingData()
             .flowOn(Dispatchers.IO)
             .cachedIn(viewModelScope)
+
     }
 
 }
