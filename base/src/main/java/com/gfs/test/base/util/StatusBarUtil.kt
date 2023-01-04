@@ -30,4 +30,18 @@ object StatusBarUtil {
         }
     }
 
+    /**
+     * 设置状态栏为 沉浸式布局（即将状态栏设为透明，并且背景色会依据布局中的背景色）
+     */
+    fun setStatusBarToImmersiveLayout(activity: Activity?, isBlackIcon: Boolean = false) {
+        activity?.apply {
+            window.decorView.systemUiVisibility = if (isBlackIcon) {
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            }
+            window.statusBarColor = Color.TRANSPARENT
+        }
+    }
+
 }

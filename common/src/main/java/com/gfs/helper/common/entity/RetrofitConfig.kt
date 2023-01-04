@@ -1,9 +1,14 @@
 package com.gfs.helper.common.entity
 
-import com.gfs.helper.common.enun.LoggingInterceptorLevel
+import com.gfs.helper.common.constant.LoggingInterceptorLevel
 import java.util.concurrent.TimeUnit
 
-class RetrofitConfig(builder: Builder? = null) {
+/**
+ * Retrofit 相关配置类
+ *
+ * 通过 RetrofitConfig.Builder() 来构造此对象
+ */
+class RetrofitConfig internal constructor(builder: Builder? = null) {
     private val mDefaultTimeOutSeconds: Long = 30
     private val mDefaultTimeUnit: TimeUnit = TimeUnit.SECONDS
 
