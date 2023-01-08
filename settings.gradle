@@ -28,6 +28,8 @@ dependencyResolutionManagement {
             library("livedata-ktx", "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
             // SwipeRefreshLayout
             library("swiperefreshlayout", "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+            library("viewModel-Ktx", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha02")
+
         }
     }
 }

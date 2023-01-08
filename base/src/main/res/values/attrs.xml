@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyActionBarView">
+        <!-- 标题内容，默认为app名称 -->
+        <attr name="actionBarTitle" format="string" />
+        <!-- 是否显示返回按钮，默认显示 -->
+        <attr name="actionBarShowBackIcon" format="boolean" />
+    </declare-styleable>
+</resources>

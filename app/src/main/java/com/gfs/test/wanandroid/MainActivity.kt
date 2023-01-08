@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.OnApplyWindowInsetsListener
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+import android.view.WindowInsets
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
-import com.gfs.helper.common.entity.RetrofitConfig
-import com.gfs.helper.common.constant.LoggingInterceptorLevel
-import com.gfs.helper.common.network.RetrofitManager
+import androidx.core.view.WindowInsetsCompat
 import com.gfs.test.base.ui.BaseActivity
 import com.gfs.test.base.util.ActivityUtil
 import com.gfs.test.base.util.StatusBarUtil
@@ -21,34 +20,6 @@ import com.gfs.test.wanandroid.mvvm.view.IndexArticleActivity
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
-//        StatusBarUtil.setStatusBarToImmersiveLayout(this)
-
-        // second way
-        window.statusBarColor = Color.TRANSPARENT
-//        binding.root.systemUiVisibility = (SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
-//
-//        ViewCompat.setOnApplyWindowInsetsListener(binding.btnChange) { view, insets ->
-//            val layoutParams = view.layoutParams as ConstraintLayout.LayoutParams
-//            layoutParams.topMargin = insets.systemWindowInsetTop
-//            insets
-//        }
-
-        window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-        val retrofitConfig = RetrofitConfig.Builder()
-            .addCommonHeader("MainActivity-test1", "123")
-            .addCommonHeader("MainActivity-test2", "456")
-            .loggingInterceptorLevel(LoggingInterceptorLevel.BODY)
-            .build()
-        RetrofitManager.setRetrofitConfig(retrofitConfig)
-
-        //todo 如何封装一个通用的 navigationBar，并可使状态栏透明
-//        binding.toolBar.apply {
-//            title = "WanAndroid"
-//            setSupportActionBar(binding.toolBar)
-//        }
-
         binding.btnChange.setOnClickListener {
             ActivityUtil.startActivity<IndexArticleActivity>(this)
         }
