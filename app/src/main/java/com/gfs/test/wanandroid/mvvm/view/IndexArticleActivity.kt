@@ -2,26 +2,18 @@ package com.gfs.test.wanandroid.mvvm.view
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.gfs.helper.common.base.paging.DefaultPagingFooterAdapter
-import com.gfs.helper.common.entity.RetrofitConfig
 import com.gfs.helper.common.expand.createViewModel
 import com.gfs.helper.common.expand.setDefaultOverScrollMode
-import com.gfs.helper.common.network.RetrofitManager
 import com.gfs.test.base.ui.BaseActivity
 import com.gfs.test.base.util.LogUtil
 import com.gfs.test.wanandroid.R
 import com.gfs.test.wanandroid.databinding.ActivityIndexArticleAdapterBinding
 import com.gfs.test.wanandroid.mvvm.view.adapter.IndexArticleAdapter
 import com.gfs.test.wanandroid.mvvm.viewmodel.IndexViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
-import java.util.concurrent.TimeUnit
 
 class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() {
 
@@ -51,11 +43,15 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
     }
 
     private fun initOnClick() {
-        mArticleAdapter.setOnItemClickListener { _, _, itemData ->
+        mArticleAdapter.setOnItemClickListener { _, index, itemData ->
             showToast("item 点击事件：${itemData?.title}")
         }
-        mArticleAdapter.addOnItemChildViewClickListener(R.id.tv_title) { _, _, itemData ->
-            showToast("childView 点击事件：${itemData?.title}")
+        mArticleAdapter.addOnItemChildViewClickListener(R.id.iv_star_collect) { _, position, itemData ->
+            if (itemData == null) {
+                return@addOnItemChildViewClickListener
+            }
+            itemData.isCollect = if (itemData.isCollect != null) !itemData.isCollect!! else true
+            mArticleAdapter.notifyItemChanged(position)
         }
     }
 
@@ -70,11 +66,12 @@ class IndexArticleActivity : BaseActivity<ActivityIndexArticleAdapterBinding>() 
             when (it.refresh) {
                 is LoadState.Loading -> {
                     binding.progressCircular.visibility = if (binding.swipeRefreshLayout.isRefreshing) {
+                        binding.rvArticles.visibility = View.VISIBLE
                         View.GONE
                     } else {
+                        binding.rvArticles.visibility = View.GONE
                         View.VISIBLE
                     }
-                    binding.rvArticles.visibility = View.GONE
                 }
                 is LoadState.NotLoading -> {
                     binding.progressCircular.visibility = View.GONE

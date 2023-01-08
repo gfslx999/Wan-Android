@@ -56,7 +56,7 @@ object RetrofitManager {
      *
      * 适用于动态添加可变请求头，例如：token、userId、userCode...
      */
-    fun addCommonHeaders(key: String, value: String) {
+    fun addCommonHeader(key: String, value: String) {
         if (key.isEmpty()) {
             return
         }

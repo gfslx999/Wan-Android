@@ -24,7 +24,8 @@ data class IndexArticleModel(
         val canEdit: Boolean?,
         val chapterId: Int?,
         val chapterName: String?,
-        val collect: Boolean?,
+        @SerializedName("collect")
+        var isCollect: Boolean?,
         val courseId: Int?,
         val desc: String?,
         val descMd: String?,
