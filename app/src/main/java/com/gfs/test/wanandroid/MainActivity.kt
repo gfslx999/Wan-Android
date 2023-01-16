@@ -23,6 +23,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.btnChange.setOnClickListener {
             ActivityUtil.startActivity<IndexArticleActivity>(this)
         }
+
+        binding.navigationBar.setOnClickBackListener {
+            showToast("hhhh")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
