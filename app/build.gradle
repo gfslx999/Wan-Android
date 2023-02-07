@@ -50,4 +50,5 @@ dependencies {
     implementation (libs.paging)
     implementation (libs.livedata.ktx)
     implementation (libs.swiperefreshlayout)
+    implementation (libs.banner)
 }

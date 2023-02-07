@@ -1,31 +1,30 @@
 package com.gfs.test.wanandroid
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.View.OnApplyWindowInsetsListener
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-import android.view.WindowInsets
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.gfs.helper.common.expand.tStartActivity
 import com.gfs.test.base.ui.BaseActivity
-import com.gfs.test.base.util.ActivityUtil
-import com.gfs.test.base.util.StatusBarUtil
 import com.gfs.test.wanandroid.databinding.ActivityMainBinding
-import com.gfs.test.wanandroid.mvvm.view.IndexArticleActivity
+import com.gfs.test.wanandroid.mvvm.view.SelectAppThemeActivity
+import com.gfs.test.wanandroid.mvvm.view.TestActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun initView(savedInstanceState: Bundle?, view: View?) {
+        var themeType = 0
         binding.btnChange.setOnClickListener {
-            ActivityUtil.startActivity<IndexArticleActivity>(this)
+//            ActivityUtil.startActivity<IndexArticleActivity>(this)
+            themeType = if (themeType == 0) {
+                1
+            } else {
+                0
+            }
         }
-
-        binding.navigationBar.setOnClickBackListener {
-            showToast("hhhh")
+        binding.btnInto.setOnClickListener {
+            tStartActivity<TestActivity>()
         }
     }
 

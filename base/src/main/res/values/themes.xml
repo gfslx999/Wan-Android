@@ -16,5 +16,38 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="CustomTheme_Sales" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primary_color</item>
+        <!-- Customize your theme here. -->
+        <item name="wanPrimaryColor">@color/primary_color</item>
+        <item name="naviHomeIcon">@drawable/tab_home</item>
+        <item name="customTitleColor">@color/purple_200</item>
+    </style>
+    
+    <style name="CustomTheme_Manager" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/night_primary_color</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primary_color</item>
+        <!-- Customize your theme here. -->
+        <item name="wanPrimaryColor">@color/night_primary_color</item>
+        <item name="naviHomeIcon">@drawable/tab_search</item>
+        <item name="customTitleColor">@color/teal_700</item>
+    </style>
 
 </resources>

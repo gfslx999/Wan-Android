@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="wanPrimaryColor" format="color" />
+    <attr name="naviHomeIcon" format="reference"/>
+    <attr name="customTitleColor" format="color" />
+
     <declare-styleable name="MyActionBarView">
         <!-- 标题内容，默认为app名称 -->
         <attr name="actionBarTitle" format="string" />

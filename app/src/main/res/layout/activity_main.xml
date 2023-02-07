@@ -23,11 +23,22 @@
         android:background="@color/white"
         android:layout_width="0dp"
         android:layout_height="0dp">
+
+        <Button
+            android:id="@+id/btn_into"
+            android:text="进入"
+            android:layout_marginTop="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/btn_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="change"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +46,7 @@
 
         <com.gfs.helper.common.ui.view.MySemiCircleProgressView
             android:id="@+id/semicircle_progress"
+            android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="@+id/btn_change"
             app:layout_constraintRight_toRightOf="@+id/btn_change"
             app:layout_constraintTop_toBottomOf="@+id/btn_change"

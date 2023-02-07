@@ -28,7 +28,10 @@ dependencyResolutionManagement {
             library("livedata-ktx", "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
             // SwipeRefreshLayout
             library("swiperefreshlayout", "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+            // ViewModel 扩展库
             library("viewModel-Ktx", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha02")
+            // Banner 轮播图 https://github.com/youth5201314/banner
+            library("banner", "com.youth.banner:banner:2.1.0")
 
         }
     }
