@@ -32,7 +32,8 @@ dependencyResolutionManagement {
             library("viewModel-Ktx", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha02")
             // Banner 轮播图 https://github.com/youth5201314/banner
             library("banner", "com.youth.banner:banner:2.1.0")
-
+            // RecyclerView 万能适配器
+            library("baseRecyclerViewAdapterHelper", "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.0-beta02")
         }
     }
 }
