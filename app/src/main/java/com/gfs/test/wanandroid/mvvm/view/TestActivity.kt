@@ -71,6 +71,10 @@ class TestActivity : BaseActivity<ActivityTestBinding>() {
 
         val pagerAutoLoopHelper = CardViewPagerAutoLoopHelper(binding.viewPagerTwo)
         pagerAutoLoopHelper.initialize(lifecycle)
+
+        mHomeKeyWorkAdapter.setOnBannerListener { data, _ ->
+            showToast(data)
+        }
     }
 
     override fun initData() {

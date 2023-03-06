@@ -4,9 +4,24 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.gfs.test.base.util.LogUtil
 
-class MyConstraintLayout : ConstraintLayout {
+/**
+ * 限制滑动方向的 ConstraintLayout
+ */
+class MyAstrictScrollOrientationConstraintLayout : ConstraintLayout {
+
+    companion object {
+        // 不作限制
+        private const val NONE = 0
+        // 限制向左滑动
+        private const val LEFT = 1
+        // 限制向右滑动
+        private const val RIGHT = 2
+    }
+
+    private val mAstrictOrientation = RIGHT
+    private var mInitialRawX = -1f
+    private var mClickRawX = -1f
 
     constructor(context: Context) : this(context, null)
 
@@ -14,10 +29,10 @@ class MyConstraintLayout : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    private var mInitialRawX = -1f
-    private var mClickRawX = -1f
-
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (mAstrictOrientation == NONE) {
+            return super.dispatchTouchEvent(ev)
+        }
         if (ev == null) {
             return false
         }
@@ -31,7 +46,18 @@ class MyConstraintLayout : ConstraintLayout {
             mInitialRawX = -1f
         }
         if (ev.action == MotionEvent.ACTION_MOVE) {
-            if (mInitialRawX != -1f && currentRawX >= mInitialRawX) {
+            val rule = when (mAstrictOrientation) {
+                LEFT -> {
+                    currentRawX <= mInitialRawX
+                }
+                RIGHT -> {
+                    currentRawX >= mInitialRawX
+                }
+                else -> {
+                    false
+                }
+            }
+            if (mInitialRawX != -1f && rule) {
                 return true
             }
             mInitialRawX = currentRawX

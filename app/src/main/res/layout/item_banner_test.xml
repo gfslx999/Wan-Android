@@ -9,7 +9,7 @@
     app:cardCornerRadius="6dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.gfs.helper.common.ui.view.MyConstraintLayout
+    <com.gfs.helper.common.ui.view.MyAstrictScrollOrientationConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -24,6 +24,6 @@
             android:layout_margin="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-    </com.gfs.helper.common.ui.view.MyConstraintLayout>
+    </com.gfs.helper.common.ui.view.MyAstrictScrollOrientationConstraintLayout>
 
 </androidx.cardview.widget.CardView>

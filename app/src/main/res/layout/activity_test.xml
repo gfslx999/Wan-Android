@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="150dp" />
 
-    <com.gfs.helper.common.ui.view.MyConstraintLayout
+    <com.gfs.helper.common.ui.view.MyAstrictScrollOrientationConstraintLayout
         android:id="@+id/cl_view_pager2_parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="0dp"
             android:layout_height="match_parent" />
-    </com.gfs.helper.common.ui.view.MyConstraintLayout>
+    </com.gfs.helper.common.ui.view.MyAstrictScrollOrientationConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_view_pager_parent"

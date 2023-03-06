@@ -1,15 +1,16 @@
 package com.gfs.test.wanandroid
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.gfs.helper.common.expand.printAllItems
 import com.gfs.helper.common.expand.tStartActivity
 import com.gfs.test.base.ui.BaseActivity
 import com.gfs.test.wanandroid.databinding.ActivityMainBinding
-import com.gfs.test.wanandroid.mvvm.view.SelectAppThemeActivity
+import com.gfs.test.wanandroid.mvvm.model.TestSortModel
 import com.gfs.test.wanandroid.mvvm.view.TestActivity
+import com.gfs.test.wanandroid.test.MyTestSort
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -26,6 +27,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.btnInto.setOnClickListener {
             tStartActivity<TestActivity>()
         }
+
+        MyTestSort.sortByMultiRules()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
