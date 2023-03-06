@@ -11,10 +11,10 @@ object MyTestSort {
     fun sortByMultiRules() {
         val preSortModels = mutableListOf<TestSortModel>()
 
-        preSortModels.add(TestSortModel("by min", TestSortModel.SEQUENCE_TYPE_MIN, -1))
-        preSortModels.add(TestSortModel("by max", TestSortModel.SEQUENCE_TYPE_MAX, -1))
         preSortModels.add(TestSortModel("by age 009", TestSortModel.SEQUENCE_TYPE_AGE, 9))
+        preSortModels.add(TestSortModel("by max", TestSortModel.SEQUENCE_TYPE_MAX, -1))
         preSortModels.add(TestSortModel("by age 007", TestSortModel.SEQUENCE_TYPE_AGE, 7))
+        preSortModels.add(TestSortModel("by min", TestSortModel.SEQUENCE_TYPE_MIN, -1))
         preSortModels.add(TestSortModel("by age 011", TestSortModel.SEQUENCE_TYPE_AGE, 11))
 
         preSortModels.printAllItems("beforeSort")
